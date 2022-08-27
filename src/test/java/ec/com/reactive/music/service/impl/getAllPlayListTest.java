@@ -4,6 +4,7 @@ package ec.com.reactive.music.service.impl;
 import ec.com.reactive.music.domain.dto.PlaylistDTO;
 import ec.com.reactive.music.domain.entities.Playlist;
 import ec.com.reactive.music.repository.IPlayListRepository;
+import ec.com.reactive.music.repository.ISongRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,15 +27,19 @@ public class getAllPlayListTest {
     @Mock
     IPlayListRepository playListRepositoryMock;
 
+    ISongRepository iSongRepository;
+
     ModelMapper modelMapper;
 
 
     PlayListServiceImpl playListService;
 
+
+
     @BeforeEach
     void init(){
         modelMapper = new ModelMapper();
-        playListService = new PlayListServiceImpl(playListRepositoryMock,modelMapper);
+        playListService = new PlayListServiceImpl(playListRepositoryMock,iSongRepository, modelMapper);
     }
 
     @Test
