@@ -14,6 +14,7 @@ import java.util.ArrayList;
 @Setter
 @Getter
 @Document(collection = "Playlist")
+@Builder(toBuilder = true)
 @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm:ss")
 public class Playlist {
     @Id

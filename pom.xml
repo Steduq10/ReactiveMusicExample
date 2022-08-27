@@ -14,7 +14,7 @@
 	<name>ReactiveMusicExample</name>
 	<description>An approach to reactive programming</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
