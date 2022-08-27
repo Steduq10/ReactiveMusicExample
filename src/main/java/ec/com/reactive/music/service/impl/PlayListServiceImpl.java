@@ -114,7 +114,7 @@ public class PlayListServiceImpl implements IPlayListService {
                     songs.remove(i);
 
                     playlist.setSongs(songs);
-                    playlist.setDuration(playlist.getDuration().plusMinutes(oldSong.getDuration().getMinute()).plusSeconds(oldSong.getDuration().getSecond()));
+                    playlist.setDuration(playlist.getDuration().minusMinutes(oldSong.getDuration().getMinute()).minusSeconds(oldSong.getDuration().getSecond()));
 
                     return this.savePlayList(entityToDTO(playlist));
                 })
