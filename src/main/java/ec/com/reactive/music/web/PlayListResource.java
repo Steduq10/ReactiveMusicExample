@@ -15,6 +15,7 @@ public class PlayListResource {
     @Autowired
     private PlayListServiceImpl playListService;
 
+    @Autowired
     private SongServiceImpl songService;
 
     //GET
