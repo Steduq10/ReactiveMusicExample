@@ -151,39 +151,34 @@ public class SongServiceImplTest {
     @DisplayName("saveSongError()")
     void saveSongError() { //Not found
 
-        Song songExpected = new Song();
-        songExpected.setIdAlbum("12345678-9");
-        songExpected.setName("songTesting1");
-        songExpected.setIdSong("459df7");
-        LocalTime newDuration = LocalTime.of(00,04,25);
-        songExpected.setDuration(newDuration);
-        songExpected.setArrangedBy("Simon Torres");
-        songExpected.setLyricsBy("Laura Gonzalez");
-        songExpected.setProducedBy("Pablo Alvarez");
-
-        /*SongDTO songExpectedDTO = new SongDTO();
-        songExpectedDTO.setIdAlbum("12345678-9");
-        songExpectedDTO.setName("songTesting1");
-        songExpectedDTO.setIdSong("459df7");
-        LocalTime newDurationDTO = LocalTime.of(00,04,25);
-        songExpectedDTO.setDuration(newDurationDTO);
-        songExpectedDTO.setArrangedBy("Simon Torres");
-        songExpectedDTO.setLyricsBy("Laura Gonzalez");
-        songExpectedDTO.setProducedBy("Pablo Alvarez");*/
-
-        var songDTOExpected = modelMapper.map(songExpected,SongDTO.class);
 
         ResponseEntity<SongDTO> songDTOResponse = new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 
         Mockito.when(songRepositoryMock.save(Mockito.any(Song.class))).thenReturn(Mono.empty());
-
-        var service = songService.saveSong(songDTOExpected);
+        LocalTime newDuration = LocalTime.of(00,04,25);
+        var service = songService.saveSong(new SongDTO(
+                "459df7",
+                "songTesting1",
+                "12345678-9",
+                "Laura Gonzalez",
+                "Pablo Alvarez",
+                "Simon Torres",
+                newDuration
+        ));
 
         StepVerifier.create(service)
                 .expectNext(songDTOResponse)
                 .expectComplete().verify();
 
-        Mockito.verify(songRepositoryMock).save(songExpected);
+        Mockito.verify(songRepositoryMock).save(new Song(
+                "459df7",
+                "songTesting1",
+                "12345678-9",
+                "Laura Gonzalez",
+                "Pablo Alvarez",
+                "Simon Torres",
+                newDuration
+        ));
     }
 
 
@@ -222,6 +217,43 @@ public class SongServiceImplTest {
         Mockito.verify(songRepositoryMock).save(songEdited);
 
     }
+
+    @Test
+    @DisplayName("updateSongError()")
+    void updateSongError() { //Not found
+
+
+        ResponseEntity<SongDTO> songDTOResponse = new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+
+        Mockito.when(songRepositoryMock.findById(Mockito.any(String.class))).thenReturn(Mono.empty());
+        Mockito.when(songRepositoryMock.save(Mockito.any(Song.class))).thenReturn(Mono.empty());
+        LocalTime newDuration = LocalTime.of(00,04,25);
+        var service = songService.updateSong("459df7",new SongDTO(
+                "459df7",
+                "songTesting1",
+                "12345678-9",
+                "Laura Gonzalez",
+                "Pablo Alvarez",
+                "Simon Torres",
+                newDuration
+        ));
+
+        StepVerifier.create(service)
+                .expectNext(songDTOResponse)
+                .expectComplete().verify();
+
+        Mockito.verify(songRepositoryMock).save(new Song(
+                "459df7",
+                "songTesting1",
+                "12345678-9",
+                "Laura Gonzalez",
+                "Pablo Alvarez",
+                "Simon Torres",
+                newDuration
+        ));
+    }
+
+
 
     @Test
     @DisplayName("deleteSong()")
